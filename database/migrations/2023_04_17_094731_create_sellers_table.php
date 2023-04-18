@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
+            $table->string('saller_name');
+            $table->string('logo_img');
+            $table->string('phone');
+            $table->string('password');
+            $table->string('adress');
+            $table->mediumText('description');
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use Closure;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
@@ -18,4 +19,9 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+    // public function handle($request, Closure $next, ...$guards){
+    //     $request->headers->set('Accept','application/json');
+    //     return $next($request);
+    // }
+        
 }

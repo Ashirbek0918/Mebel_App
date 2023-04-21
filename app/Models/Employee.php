@@ -10,5 +10,14 @@ class Employee extends Model
 {
     use HasFactory,HasApiTokens;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'name',
+        'phone',
+        'password',
+        'role'
+    ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 }

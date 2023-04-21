@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,16 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sellers', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('saller_name');
-            $table->string('logo_img');
-            $table->string('adress_uz');
-            $table->string('adress_qr');
-            $table->string('adress_ru');
-            $table->mediumText('description_uz');
-            $table->mediumText('description_qr');
-            $table->mediumText('description_ru');
+            $table->string('title');
+            $table->integer('rating')->nullable();
+            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Product::class);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sellers');
+        Schema::dropIfExists('comments');
     }
 };

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('password');
-            $table->enum('role',['admin','marketolog','saler']); 
+            $table->enum('role',['admin','marketolog','seller']); 
             $table->softDeletes();
             $table->timestamps();
         });

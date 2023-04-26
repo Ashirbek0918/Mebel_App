@@ -2,8 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Seller;
+use App\Models\Employee;
 use App\Models\User;
+use App\Models\Seller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SellerPolicy
@@ -39,9 +41,9 @@ class SellerPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create()
     {
-        //
+        return Auth::user()->role == 'admin';
     }
 
     /**
@@ -51,9 +53,9 @@ class SellerPolicy
      * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Seller $seller)
+    public function update($seller)
     {
-        //
+        return Auth()->user()->id == $seller->seller_id || Auth()->user()->role == 'admin';   
     }
 
     /**
@@ -63,9 +65,9 @@ class SellerPolicy
      * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Seller $seller)
+    public function delete($seller)
     {
-        //
+        return Auth()->user()->id == $seller->seller_id || Auth()->user()->role == 'admin';
     }
 
     /**
@@ -75,9 +77,9 @@ class SellerPolicy
      * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Seller $seller)
+    public function restore($seller)
     {
-        //
+        return Auth()->user()->id == $seller->seller_id || Auth()->user()->role == 'admin';
     }
 
     /**

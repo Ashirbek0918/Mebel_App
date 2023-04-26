@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryUpdateRequest extends FormRequest
+class SellerUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +24,14 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_uz'=>'required',
-            'title_qr'=>'required',
-            'title_ru'=>'required'
+            'seller_name'=>'string',
+            'logo_img'=>'string',
+            'adress_uz'=>'string',
+            'adress_qr'=>'string',
+            'adress_ru'=>'string',
+            'description_uz'=>'string',
+            'description_qr'=>'string',
+            'description_ru'=>'string'
         ];
     }
 }

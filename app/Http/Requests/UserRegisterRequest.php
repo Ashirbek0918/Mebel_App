@@ -27,6 +27,7 @@ class UserRegisterRequest extends FormRequest
             'name'=>'required|string',
             'phone'=>'required|unique:users,phone|min:9',
             'password'=>'required|string|min:8',
+            'profile_photo'=>'url'
         ];
     }
 }

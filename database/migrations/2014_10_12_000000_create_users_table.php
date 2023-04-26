@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('password');
+            $table->string('profile_photo')->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

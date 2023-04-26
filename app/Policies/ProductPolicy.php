@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Product;
 use App\Models\User;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
@@ -39,9 +40,9 @@ class ProductPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create()
     {
-        //
+        return Auth::user()->role === 'admin' ||  Auth::user()->role =='seller';
     }
 
     /**

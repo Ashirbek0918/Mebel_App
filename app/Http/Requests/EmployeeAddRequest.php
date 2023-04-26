@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
-class CategoryUpdateRequest extends FormRequest
+class EmployeeAddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,10 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_uz'=>'required',
-            'title_qr'=>'required',
-            'title_ru'=>'required'
+            'name'=>'required',
+            'phone'=>'required|unique:employees,phone',
+            'password'=>'required|min:8',
+            'role.enum'=>'Valid role values are regular,saler,marketolog',
         ];
     }
 }

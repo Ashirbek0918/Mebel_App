@@ -30,7 +30,8 @@ class AuthController extends Controller
         User::create([
             'name'=>$request->name,
             'phone'=>$phone,
-            'password'=>Hash::make($request->password)
+            'password'=>Hash::make($request->password),
+            'profile_photo'=>$request->profile_photo
         ]);
         return ResponseController::success('Successfully created',200);
     }
@@ -39,7 +40,8 @@ class AuthController extends Controller
         $user->update($request->only([
             'name',
             'phone',
-            'password'
+            'password',
+            'profile_photo'
         ]));
         return ResponseController::success('Successfully updated',200);
     }

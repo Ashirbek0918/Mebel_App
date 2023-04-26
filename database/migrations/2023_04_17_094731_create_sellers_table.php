@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
-            $table->string('saller_name');
+            $table->string('seller_name');
+            $table->integer('seller_id');
             $table->string('logo_img');
-            $table->string('adress_uz');
-            $table->string('adress_qr');
-            $table->string('adress_ru');
-            $table->mediumText('description_uz');
-            $table->mediumText('description_qr');
-            $table->mediumText('description_ru');
+            $table->string('adress');
+            $table->string('adress_qr')->nullable();
+            $table->string('adress_ru')->nullable();
+            $table->mediumText('description');
+            $table->mediumText('description_qr')->nullable();
+            $table->mediumText('description_ru')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

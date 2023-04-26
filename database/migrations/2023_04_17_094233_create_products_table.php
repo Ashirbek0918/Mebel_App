@@ -16,17 +16,17 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name_uz');
-            $table->string('name_qr');
-            $table->string('name_ru');
+            $table->string('name');
+            $table->string('name_qr')->nullable();
+            $table->string('name_ru')->nullable();
             $table->string('title_img');
             $table->double('first_price');
             $table->double('discount')->nullable();
             $table->double('second_price')->nullable();
             $table->foreignIdFor(Seller::class);
-            $table->mediumText('description_uz');
-            $table->mediumText('description_qr');
-            $table->mediumText('description_ru');
+            $table->mediumText('description');
+            $table->mediumText('description_qr')->nullable();
+            $table->mediumText('description_ru')->nullable();
             $table->json('images_url');
             $table->softDeletes();
             $table->timestamps();

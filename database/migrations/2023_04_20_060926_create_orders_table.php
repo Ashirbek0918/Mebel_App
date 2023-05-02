@@ -19,6 +19,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Product::class);
             $table->foreignIdFor(User::class);
+            $table->enum('status',['new','measurement process','collecting','ready','delivered']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

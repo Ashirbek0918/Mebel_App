@@ -36,6 +36,7 @@ class ProductCreateRequest extends FormRequest
             'description_qr'=>'string',
             'description_ru'=>'string',
             'images_url'=>'required',
+            'category_id'=>'required|exists:categories,id'
         ];
     }
 }

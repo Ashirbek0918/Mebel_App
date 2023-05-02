@@ -7,6 +7,8 @@ use App\Models\Seller;
 use Illuminate\Http\Request;
 use App\Http\Requests\SellerCreateRequest;
 use App\Http\Requests\SellerUpdateRequest;
+use App\Http\Resources\OneSellerResource;
+use App\Http\Resources\SellerProductResource;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,13 +27,13 @@ class SellerController extends Controller
             'role'=>'seller'
         ]);
         $seller = Seller::create([
-            'seller_name'=>$request->seller_name,
+            'title'=>$request->title,
             'seller_id'=>$sellerAdmin->id,
             'logo_img'=>$request->logo_img,
             'adress'=>$request->adress,
             'description'=>$request->description,
         ]);
-        return ResponseController::success('Succesfully created',200);
+        return ResponseController::success('Succesfully created',201);
     }
     public function update(SellerUpdateRequest $request, Seller $seller){
         try {
@@ -40,7 +42,7 @@ class SellerController extends Controller
             return ResponseController::error('You are not allowed to update',403);
         }
         $seller->update($request->only([
-            'seller_name',
+            'title',
             'logo_img',
             'adress',
             'description',
@@ -53,7 +55,31 @@ class SellerController extends Controller
         } catch (\Throwable $th) {
             return ResponseController::error('You are not allowed to delete',403);
         }
+        $seller->products()->delete();
+        Employee::where('id',$seller->seller_id)->delete();
         $seller->delete();
         return ResponseController::success('Succesfully deleted',200);
+    }
+
+    public function index(){
+        $sellers = Seller::paginate(20);
+        $collection = [
+            "last_page" =>$sellers->lastPage(),
+            "sellers" => []
+        ];
+        foreach($sellers as $seller){
+            $collection["sellers"][] = new OneSellerResource($seller);
+        }
+        return ResponseController::data($collection);
+        return response([
+            'message'=>'Seller',
+            'data'=> new OneSellerResource($seller)
+        ]);
+    }
+    public function seller(Seller $seller){
+        return response([
+            'message'=>'Seller Products',
+            'data'=>new SellerProductResource($seller)
+        ]);
     }
 }

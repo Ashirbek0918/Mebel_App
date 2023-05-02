@@ -24,7 +24,17 @@ class ProductUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            
+            'name'=>'string',
+            'name_qr'=>'string',
+            'name_ru'=>'string',
+            'title_img'=>'url',
+            'first_price'=>'double',
+            'discount'=>'nullable|',
+            'second_price'=>'nullable|',
+            'description'=>'string',
+            'description_qr'=>'string',
+            'description_ru'=>'string',
+            'images_url'=>'url|string',
         ];
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryUpdateRequest;
+use App\Http\Resources\CategoriesResource;
+use App\Http\Resources\CategoryBookResource;
+use App\Http\Resources\OneCategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -47,5 +50,23 @@ class CategoryControler extends Controller
         }
         $category->delete();
         return ResponseController::success('Category deleted',200);
+    }
+    public function allCategories(){
+        $categories = Category::paginate(30);
+        $collection = [
+            "last_page" =>$categories->lastPage(),
+            "categories" => []
+        ];
+        foreach ($categories as $category){
+            $collection['categories'][] = new CategoriesResource($category);
+            
+        }
+        return ResponseController::data($collection);
+    }
+    public function category(Category $category){
+        return response([
+            'message' => 'Category',
+            'data'=>new OneCategoryResource($category)
+        ]);
     }
 }

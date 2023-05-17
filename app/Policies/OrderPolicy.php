@@ -65,9 +65,9 @@ class OrderPolicy
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete( $order)
+    public function delete($order)
     {
-        return Auth()->user()->role = 'marketolog' || Auth()->user()->role == 'admin' ;
+        return Employee::find(Auth::user()->id) || Auth::user()->id == $order->user_id;
     }
 
     /**

@@ -25,7 +25,7 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_uz'=>'required',
+            'title'=>['required',Rule::unique('categories')->ignore(request('category'))],
             'title_qr'=>'required',
             'title_ru'=>'required'
         ];

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EmployeeAddRequest;
 use App\Models\Seller;
+use App\Models\Employee;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\EmployeeAddRequest;
+use App\Http\Resources\OneSellerResource;
 use App\Http\Requests\SellerCreateRequest;
 use App\Http\Requests\SellerUpdateRequest;
-use App\Http\Resources\OneSellerResource;
 use App\Http\Resources\SellerProductResource;
-use App\Models\Employee;
-use Illuminate\Support\Facades\Hash;
 
 class SellerController extends Controller
 {
@@ -20,6 +21,10 @@ class SellerController extends Controller
         } catch (\Throwable $th) {
             return ResponseController::error('You are not allowed to create',403);
         }
+        $logo_img = $request->file('logo_img');
+        $image_name = time()."_".Str::random(10).".".$logo_img->getClientOriginalExtension();
+        $logo_img->move(public_path('/images'), $image_name);
+        $logo_img_url= env('APP_URL')."/backend/public/images/".$image_name;
         $sellerAdmin = Employee::create([
             'name'=>$sellerrequest->name,
             'phone'=>$sellerrequest->phone,
@@ -29,7 +34,7 @@ class SellerController extends Controller
         $seller = Seller::create([
             'title'=>$request->title,
             'seller_id'=>$sellerAdmin->id,
-            'logo_img'=>$request->logo_img,
+            'logo_img'=>$logo_img_url,
             'adress'=>$request->adress,
             'description'=>$request->description,
         ]);
@@ -56,6 +61,7 @@ class SellerController extends Controller
             return ResponseController::error('You are not allowed to delete',403);
         }
         $seller->products()->delete();
+        
         Employee::where('id',$seller->seller_id)->delete();
         $seller->delete();
         return ResponseController::success('Succesfully deleted',200);

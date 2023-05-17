@@ -38,7 +38,7 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        //
+        $product->basket()->delete();
     }
 
     /**

@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BasketCreateRequest;
-use App\Http\Resources\CategoryProductResource;
+use App\Models\Basket;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\CategoryResource;
+use App\Http\Requests\BasketCreateRequest;
 use App\Http\Resources\UserBasketResource;
-use App\Models\Basket;
+use App\Http\Resources\CategoryProductResource;
 
 class BasketControler extends Controller
 {
     public function create(BasketCreateRequest $request){
+        $product = Product::where('id', $request->product_id)->first();
+        if(!$product){
+            return ResponseController::error('This product does not exist');
+        }
         $basket = Basket::where('user_id',Auth()->user()->id)->where('product_id', $request->product_id)->first();
         if($basket){
             return ResponseController::error('This product is already added to your favorites',409);

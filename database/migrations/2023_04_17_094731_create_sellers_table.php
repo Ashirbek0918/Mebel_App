@@ -19,12 +19,7 @@ return new class extends Migration
             $table->integer('seller_id');
             $table->string('logo_img');
             $table->string('adress');
-            $table->string('adress_qr')->nullable();
-            $table->string('adress_ru')->nullable();
             $table->mediumText('description');
-            $table->mediumText('description_qr')->nullable();
-            $table->mediumText('description_ru')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

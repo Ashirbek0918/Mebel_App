@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('password');
             $table->enum('role',['admin','marketolog','seller']); 
-            $table->softDeletes();
             $table->timestamps();
         });
 

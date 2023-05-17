@@ -21,17 +21,17 @@ class ImageController extends Controller
         if(!is_array($images)){
             $image_name = time()."_".Str::random(10).".".$images->getClientOriginalExtension();
             $images->move(public_path('/images'), $image_name);
-            $image_url[] = env('APP_URL')."/images/".$image_name;
+            $image_url[] = env('APP_URL')."/backend/public/images/".$image_name;
         }
         foreach($images as $image){
             $image_name = time()."_".Str::random(10).".".$image->getClientOriginalExtension();
             $image->move(public_path('/images'), $image_name);
-            $image_url[] = env('APP_URL')."/images".$image;
+            $image_url[] = env('APP_URL')."/backend/public/images/".$image_name;
         }
         return $image_url;
     }
     public function deleteImage(Request $request){
-        $path = public_path('/images/'.$request->image);
+        $path = public_path('/backend/public/images/'.$request->image);
         if(!$path){
             return ResponseController::error('Image does not exists', 404);
         }

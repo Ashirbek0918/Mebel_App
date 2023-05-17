@@ -25,7 +25,7 @@ class SellerCreateRequest extends FormRequest
     {
         return [
             'title'=>'required|string',
-            'logo_img'=>'required|string',
+            'logo_img'=>'required|image|mimes:jpg,png,jpeg,gif,svg',
             'adress'=>'required|string',
             'adress_qr'=>'string',
             'adress_ru'=>'string',

@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\OrderGetRequest;
 use App\Http\Resources\OrdersResource;
 use App\Http\Resources\CategoryResource;
+use App\Http\Requests\OrderCreateRequest;
 use App\Http\Resources\UserOrderResource;
 
 class OrderController extends Controller
 {
-    public function create(OrderRequest $request){
+    public function create(OrderCreateRequest $request){
+        $product = Product::where('id', $request->product_id)->first();
+        if(!$product){
+            return ResponseController::error('This product does not exist');
+        }
         Order::create([
             'user_id' => Auth::user()->id,
             'product_id' =>$request->product_id,
@@ -38,6 +44,7 @@ class OrderController extends Controller
             return ResponseController::error('You are not allowed',403);
         }
         $orders = Order::where('status',$request->status)->paginate(20);
+        $collection = [];
         if(count($orders) == 0){
             return ResponseController::error('Orders not yet',404);
         }
@@ -64,6 +71,7 @@ class OrderController extends Controller
     }
     public function userorder(){
         $orders = Auth::user()->order;
+        $collection = [];
         foreach ($orders as $order){
             $collection['orders'][] = new UserOrderResource($order);
         }

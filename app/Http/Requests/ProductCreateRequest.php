@@ -27,7 +27,7 @@ class ProductCreateRequest extends FormRequest
             'name'=>'required|string',
             'name_qr'=>'string',
             'name_ru'=>'string',
-            'title_img'=>'required|url',
+            'title_img'=>'required|image|mimes:jpg,png,jpeg,gif,svg',
             'first_price'=>'required|',
             'discount'=>'nullable|',
             'second_price'=>'nullable|',
@@ -35,7 +35,7 @@ class ProductCreateRequest extends FormRequest
             'description'=>'required|string',
             'description_qr'=>'string',
             'description_ru'=>'string',
-            'images_url'=>'required',
+            'images'=>'required',
             'category_id'=>'required|exists:categories,id'
         ];
     }

@@ -68,6 +68,14 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('image/upload', 'upload');
         Route::delete('image/delete', 'deleteImage');
     });
+
+    Route::controller(EmployeeController::class)->group(function(){
+        Route::post('employee/add', 'add');
+        Route::delete('employee/delete/{employee}','delete');
+        Route::get('users','allusers');
+        Route::get('employees','employees');
+        Route::get('user/view/{user}','index');
+    });
 });
 
 

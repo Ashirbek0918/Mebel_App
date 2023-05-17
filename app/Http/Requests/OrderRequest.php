@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-
+use App\Enums\ServerStatus;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class OrderRequest extends FormRequest
 {
@@ -24,7 +26,7 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id'=>'required|exists:products,id',
+            'status'=>['required', Rule::in(['new','measurement process','collecting','ready','delivered'])]
         ];
     }
 }

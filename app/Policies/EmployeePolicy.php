@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Employee;
 use App\Models\User;
+use App\Models\Employee;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EmployeePolicy
@@ -28,9 +29,9 @@ class EmployeePolicy
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Employee $employee)
+    public function view()
     {
-        //
+        return Auth::user()->role == 'admin';
     }
 
     /**
@@ -39,9 +40,9 @@ class EmployeePolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create()
     {
-        //
+        return Auth::user()->role == 'admin';
     }
 
     /**
@@ -63,9 +64,9 @@ class EmployeePolicy
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Employee $employee)
+    public function delete()
     {
-        //
+        return Auth::user()->role == 'admin';
     }
 
     /**
